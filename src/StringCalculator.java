@@ -104,9 +104,9 @@ public class StringCalculator {
             for (int j = i + 1; j < delims.size(); j++) {
 
                 if (delims.get(j).length() > delims.get(i).length()) {
-                    String tmp = delims.get(i);
+                    String temp = delims.get(i);
                     delims.set(i, delims.get(j));
-                    delims.set(j, tmp);
+                    delims.set(j, temp);
                 }
             }
         }
