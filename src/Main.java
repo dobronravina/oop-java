@@ -14,7 +14,7 @@ public class Main {
             System.out.println("Сума = "+result);
         }
         catch (Exception e){
-            System.out.println("Не числа рахувати складно...)");
+            System.out.println("Не числа рахувати складно...))");
         }
 
     }

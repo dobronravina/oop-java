@@ -54,7 +54,7 @@ public class StringCalculator {
             }
 
             if (negative.size() != 0) {
-            System.out.println(negative.toString());
+            System.out.println("Не люблю від'ємні значення. Недозволені значення: "+negative.toString());
         }
 
         return sum;
