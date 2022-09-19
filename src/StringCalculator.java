@@ -56,11 +56,10 @@ public class StringCalculator {
             userNum = numbers + ",0";
         }
 
-        // Сортуємо роздільники за спаданням довжини
+
         sort();
 
-        // Розбиваємо введений рядок роздільниками
-        splitNumbers();
+        splitNum();
 
 
         return sum;
@@ -68,11 +67,9 @@ public class StringCalculator {
 
 
     private void afterdell(String numbers) throws Exception {
-        if (starts(numbers)) {
-            if (!numbers.contains("\\\\n")) {
+            if (!numbers.contains("\\n")) {
                 throw new Exception("Відсутнє завершення рядка");
             }
-        }
     }
 
     private boolean starts(String numbers) {
@@ -94,6 +91,9 @@ public class StringCalculator {
             dell = dell.replace("*", "\\*");
             dell = dell.replace("+", "\\+");
             dell = dell.replace("^", "\\^");
+            dell = dell.replace(".", "\\.");
+            dell = dell.replace("(", "\\(");
+            dell = dell.replace(")", "\\)");
 
             delims.add(dell);
         }
@@ -112,7 +112,7 @@ public class StringCalculator {
         }
     }
 
-    private String getRegex() {
+    private String reg() {
         StringBuilder regex = new StringBuilder();
         for (String delimiter : delims) {
             regex.append(delimiter);
@@ -122,8 +122,8 @@ public class StringCalculator {
         return regex.toString();
     }
 
-    private void splitNumbers() {
-        String regex = getRegex();
+    private void splitNum() {
+        String regex = reg();
         splnum = userNum.split(regex);
     }
 }
