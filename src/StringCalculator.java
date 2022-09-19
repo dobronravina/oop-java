@@ -4,45 +4,24 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.lang.Exception;
 
-
 public class StringCalculator {
-
     private final List<Integer> negative = new ArrayList<>();
     private final ArrayList<String> delims = new ArrayList<>();
     private String userNum;
     private String [] splnum;
-    public int add(String numbers) {
+
+
+    public int add(String numbers) throws Exception {
+
+        delims.add(",");
+        delims.add("\\\\n");
+
         int sum = 0;
-
-
         if ((numbers.isEmpty()) || (numbers.equals(" "))) {
             return sum;
         }
 
-
-         splnum = numbers.split(",|\\\\n");
-
-
-        try {
-            for (String s : splnum) {
-                int nums = Integer.parseInt(s);
-                if (nums < 0) {
-                    negative.add(nums);
-                    continue;
-                }
-
-                if (nums > 1000) {
-                    continue;
-                }
-                sum += nums;
-            }
-        } catch (NumberFormatException ex) {
-            System.out.println("Не числа рахувати складно...)");
-            sum = 0;
-        }
-        if (negative.size() != 0) {
-            System.out.println(negative.toString());
-        }
+        splnum = numbers.split(",|\\\\n");
 
 
         if (starts(numbers)) {
@@ -56,30 +35,44 @@ public class StringCalculator {
             userNum = numbers + ",0";
         }
 
-
         sort();
 
-        splitNum();
+        splitNumbers();
 
+
+
+            for (String s : splnum) {
+                int nums = Integer.parseInt(s);
+                if (nums < 0) {
+                    negative.add(nums);
+                    continue;
+                }
+                if (nums > 1000) {
+                    continue;
+                }
+                sum += nums;
+            }
+
+            if (negative.size() != 0) {
+            System.out.println(negative.toString());
+        }
 
         return sum;
     }
-
-
     private void afterdell(String numbers) throws Exception {
+        if (starts(numbers)) {
             if (!numbers.contains("\\n")) {
                 throw new Exception("Відсутнє завершення рядка");
             }
+        }
     }
-
     private boolean starts(String numbers) {
         return numbers.length() > 2 && numbers.startsWith("//");
     }
 
 
     private void delims(String starts) {
-        delims.add(",");
-        delims.add("\\\\n");
+
 
 
         Matcher m = Pattern.compile("\\[(.*?)\\]").matcher(starts);
@@ -94,25 +87,24 @@ public class StringCalculator {
             dell = dell.replace(".", "\\.");
             dell = dell.replace("(", "\\(");
             dell = dell.replace(")", "\\)");
+            dell = dell.replace("$", "\\$");
 
             delims.add(dell);
         }
     }
 
-   private void sort() {
-       for (int i = 0; i < delims.size(); i++) {
+    private void sort() {
+        for (int i = 0; i < delims.size(); i++) {
             for (int j = i + 1; j < delims.size(); j++) {
-
                 if (delims.get(j).length() > delims.get(i).length()) {
-                    String tmp = delims.get(i);
+                    String temp = delims.get(i);
                     delims.set(i, delims.get(j));
-                    delims.set(j, tmp);
+                    delims.set(j, temp);
                 }
             }
         }
     }
-
-    private String reg() {
+    private String getRegex() {
         StringBuilder regex = new StringBuilder();
         for (String delimiter : delims) {
             regex.append(delimiter);
@@ -122,8 +114,10 @@ public class StringCalculator {
         return regex.toString();
     }
 
-    private void splitNum() {
-        String regex = reg();
+    private void splitNumbers() {
+        String regex = getRegex();
         splnum = userNum.split(regex);
     }
 }
+
+
