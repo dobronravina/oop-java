@@ -1,32 +1,34 @@
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
 
-public class Immutable
- {
+import java.util.Arrays;
+import java.util.Scanner;
+import java.util.*;
+
+public class Immutable {
 
 
 
     Scanner sc = new Scanner(System.in);
-    int num1;
-    int num2;
+    int Row;
+    int Col;
 
-   final List<ArrayList<Integer>> matrix = new ArrayList();
+    final int[][] matrix = new int[Row][Col];
 
 
 
-    public void menu(List <ArrayList<Integer>> matrix)
+    public void menu(int[][] matrix)
     {
-        System.out.println("\n1. Копіювати матрицю\n2.Отримати елемент\n3. Отримати рядок\n4. Отримати стовпчик\n5. Розмірність матриці\n6. Порівняти матриці\n7. Отримати HashCode\n8. Додавання матриць\n9. Множення матриці на скаляр\n\n ");
+        System.out.println("\n1. Копіювати матрицю\n2. Отримати елемент\n3. Отримати рядок\n4. Отримати стовпчик\n5. Розмірність матриці\n6. Порівняти матриці\n7. Отримати HashCode\n8. Додавання матриць\n9. Множення матриці на скаляр\n10. Замінити елемент\n ");
 
         int choise = sc.nextInt();
+
         if(choise == 1)
         {
-            List <ArrayList<Integer>> cop = copy_matrix(matrix);
+            copy_matrix(matrix);
         }
         else if (choise == 2)
         {
             get_element(matrix);
+
         }
         else if (choise == 3)
         {
@@ -60,93 +62,101 @@ public class Immutable
 
 
 
-    public List <ArrayList<Integer>> emptymatrix()
+    public int[][] emptymatrix()
     //Пуста матриця
     {
-        System.out.println("Введіть кількість рядків:");
-        num1 = sc.nextInt();
-        System.out.println("Введіть кількість стовпців:");
-        num2 = sc.nextInt();
-        for(int i = 0; i < num1; i++){
-            ArrayList<Integer> matrixi = new ArrayList<>();
-            for(int j = 0; j < num2; j++) {
-                matrixi.add(null);}
-            matrix.add(matrixi);
+        System.out.println("Введіть кількість рядків: ");
+        Row = sc.nextInt();
+        System.out.println("Введіть кількість стовпців: ");
+        Col = sc.nextInt();
+        int[][] matrix = new int[Row][Col];
+
+        for(int i = 0; i < matrix.length; i++){
+            for(int j = 0; j < matrix[i].length; j++){
+                matrix[i][j] = 0;
+            }
         }
+        for(int[] row: matrix){
+
+            System.out.println(Arrays.toString(row));}
         return matrix;
     }
 
 
-    public List <ArrayList<Integer>>  creating_by_user()
+    public int[][] usermatrix()
     {
-        System.out.println("Введіть кількість рядків:");
-        num1 = sc.nextInt();
-        System.out.println("Введіть кількість стовпців:");
-        num2 = sc.nextInt();
+        System.out.println("Введіть кількість рядків: ");
+        Row = sc.nextInt();
+        System.out.println("Введіть кількість стовпців: ");
+        Col = sc.nextInt();
+        int[][] matrix = new int[Row][Col];
         System.out.println("Заповніть елементами по строках: ");
-        for(int i = 0; i < num1; i++){
-            ArrayList<Integer> matrixi = new ArrayList<>();
-            for(int j = 0; j < num2; j++) {
-                int num = sc.nextInt();
-                matrixi.add(num);}
-            matrix.add(matrixi);
-        }
-        System.out.println(matrix);
-        return matrix;
-    }
 
-    public List <ArrayList<Integer>> random_creating()
+        for(int i = 0; i < matrix.length; i++){
+            for(int j = 0; j < matrix[i].length; j++){
+                matrix[i][j] = sc.nextInt();
+            }
+        }
+        for(int[] row: matrix){
+
+            System.out.println(Arrays.toString(row));}
+        return matrix;}
+
+
+    public int[][] random_creating()
     {
-        System.out.println("Введіть кількість рядків:");
-        num1 = sc.nextInt();
-        System.out.println("Введіть кількість стовпців:");
-        num2 = sc.nextInt();
-        for(int i = 0; i < num1; i++){
-            ArrayList<Integer> matrixi = new ArrayList<>();
-            for(int j = 0; j < num2; j++) {
-                int num = (int)(Math.random()*100 );
-                matrixi.add(num);}
-            matrix.add(matrixi);
+        System.out.println("Введіть кількість рядків: ");
+        Row = sc.nextInt();
+        System.out.println("Введіть кількість стовпців: ");
+        Col = sc.nextInt();
+        int[][] matrix = new int[Row][Col];
+
+        for(int i = 0; i < matrix.length; i++){
+            for(int j = 0; j < matrix[i].length; j++){
+                matrix[i][j] = (int)(Math.random()*100);
+            }
         }
-        System.out.println(matrix);
+        for(int[] row: matrix){
+
+            System.out.println(Arrays.toString(row));}
         return matrix;
     }
 
-    private void  get_element(List <ArrayList<Integer>> matrix){
+    private void  get_element(int[][] matrix){
         System.out.println("Введіть номер елемента: ");
         int eli = sc.nextInt();
         int elj = sc.nextInt();
-        if (eli > num1 || elj > num2){
+        if (eli > Row || elj > Col){
             System.out.println("Не існує елемента з таким номером");
         }
-        System.out.println(matrix.get(eli).get(elj));
+        System.out.println(matrix[eli][elj]);
     }
 
-    private void  get_row(List <ArrayList<Integer>> matrix){
+    private void  get_row(int[][] matrix){
         System.out.println("Введіть номер рядка: ");
         int row = sc.nextInt();
-        for (int j = 0; j < num2; j++)
+        for (int j = 0; j < Col; j++)
         {
-            System.out.print(matrix.get(row).get(j)+ " ");
+            System.out.print(matrix[row][j]);
         }
 
     }
-    private void  get_cal(List <ArrayList<Integer>> matrix){
-        System.out.println("Введіть номер рядка: ");
+    private void  get_cal(int[][] matrix){
+        System.out.println("Введіть номер стовпчика: ");
         int cal = sc.nextInt();
-        for (int i = 0; i < num1; i++)
+        for (int i = 0; i < Row; i++)
         {
-            System.out.println(matrix.get(i).get(cal));
+            System.out.println(matrix[i][cal]);
         }
 
     }
     private void get_size()
     {
-        System.out.println("Розмірність матриці: "+ num1 + "x" + num2);
+        System.out.println("Розмірність матриці: "+ Row + "x" + Col);
     }
 
-    private void equalmatrix(List <ArrayList<Integer>> matrix){
-        List <ArrayList<Integer>> newmatrix = new ArrayList<>();
+    private void equalmatrix(int[][] matrix){
+        int[][] newmatrix = new int[Row][Col] ;
 
         System.out.println("\n\n1 - заповнити з клавіатури\n2 - заповнити рандомними числами");
         int choise = sc.nextInt();
@@ -157,14 +167,19 @@ public class Immutable
             int n1 = sc.nextInt();
             System.out.println("Введіть кількість стовпців:");
             int n2 = sc.nextInt();
+            newmatrix = new int[n1][n2];
             System.out.println("Заповніть елементами по строках: ");
-            for(int i = 0; i < n1; i++){
-                ArrayList<Integer> matrixit = new ArrayList<>();
-                for(int j = 0; j < n2; j++) {
-                    int num = sc.nextInt();
-                    matrixit.add(num);}
-                newmatrix.add(matrixit);
+            for(int i=0; i<n1; i++){
+                for(int j=0; j<n2;j++) {
+                    newmatrix[i][j] = sc.nextInt();
+                }
             }
+
+            System.out.println("Введена матриця: ");
+
+            for(int[] row: newmatrix){
+
+                System.out.println(Arrays.toString(row));}
         }
         else if (choise == 2)
         {
@@ -172,19 +187,25 @@ public class Immutable
             int n1 = sc.nextInt();
             System.out.println("Введіть кількість стовпців:");
             int n2 = sc.nextInt();
-            for(int i = 0; i < n1; i++){
-                ArrayList<Integer> matrixit = new ArrayList<>();
-                for(int j = 0; j < n2; j++) {
-                    int num = (int)(Math.random()*100 );
-                    matrixit.add(num);}
-                newmatrix.add(matrixit);
+            newmatrix = new int[n1][n2];
+            for(int i=0; i<n1; i++){
+                for(int j=0; j<n2;j++) {
+                    newmatrix[i][j] = (int)(Math.random()*100 );
+                }
             }
+
+            System.out.println("Введена матриця: ");
+
+            for(int[] row: newmatrix){
+
+                System.out.println(Arrays.toString(row));}
         }
         else {
             System.out.println("Немає такого номера у списку");
         }
 
-        if (matrix.equals(newmatrix) == true)
+
+        if (Arrays.deepEquals(matrix, newmatrix) == true)
         {
             System.out.println("Матриці однакові");
         }
@@ -194,21 +215,26 @@ public class Immutable
 
     }
 
-    private void gethash(List <ArrayList<Integer>> matrix)
+    private void gethash(int[][] matrix)
     {
         System.out.println("HashCode матриці: "+matrix.hashCode());
     }
 
-    private List <ArrayList<Integer>> copy_matrix(List <ArrayList<Integer>> matrix)
+    private void copy_matrix(int[][] matrix)
     {
-        List <ArrayList<Integer>> copied = new ArrayList<>(matrix);
-        System.out.println(copied);
-        return copied;
+        int[][] copied = new int[matrix.length][];
+        for (int i = 0; i < matrix.length; i++) {
+            copied[i] = matrix[i].clone();
+        }
+
+
+        for(int[] row: copied){
+
+            System.out.println(Arrays.toString(row));}
     }
 
-    private void summatrix(List <ArrayList<Integer>> matrix)
+    private void summatrix(int[][] matrix)
     {
-        List <ArrayList<Integer>> matrix2 = new ArrayList<>();
 
         System.out.println("\n\n1 - заповнити з клавіатури\n2 - заповнити рандомними числами");
         int choise = sc.nextInt();
@@ -216,83 +242,89 @@ public class Immutable
         int n1 = sc.nextInt();
         System.out.println("Введіть кількість стовпців:");
         int n2 = sc.nextInt();
+        int[][] matrix2 = new int[n1][n2];
+
 
         if (choise == 1)
-        {
-            System.out.println("Заповніть елементами по строках: ");
-            for(int i = 0; i < n1; i++){
-                ArrayList<Integer> matrixit = new ArrayList<>();
-                for(int j = 0; j < n2; j++) {
-                    int num = sc.nextInt();
-                    matrixit.add(num);}
-                matrix2.add(matrixit);
-                System.out.println("Введена матриця: "+matrix2);
+        { System.out.println("Заповніть елементами по строках: ");
+
+            for(int i = 0; i < matrix2.length; i++){
+                for(int j = 0; j < matrix2[i].length; j++){
+                    matrix2[i][j] = sc.nextInt();
+                }
             }
+            System.out.println("Введена матриця: ");
+            for(int[] row: matrix2){
+
+                System.out.println(Arrays.toString(row));}
+
         }
         else if (choise == 2)
         {
+            for(int i = 0; i < matrix2.length; i++){
+                for(int j = 0; j < matrix2[i].length; j++){
+                    matrix2[i][j] = (int)(Math.random()*100);
+                }
+            }
+            System.out.println("Згенерована матриця: ");
+            for(int[] row: matrix2){
 
-            for(int i = 0; i < n1; i++){
-                ArrayList<Integer> matrixit = new ArrayList<>();
-                for(int j = 0; j < n2; j++) {
-                    int num = (int)(Math.random()*100 );
-                    matrixit.add(num);}
-                matrix2.add(matrixit);
-                System.out.println("Згенерована матриця: "+matrix2);
+                System.out.println(Arrays.toString(row));
             }
         }
         else {
             System.out.println("Немає такого номера у списку");
         }
 
-        List<ArrayList<Integer>> summatrix = new ArrayList<>();
 
-        if(num1 == n1 && num2 == n2)
+
+        int[][] summatrix = new int[Row][Col];
+
+
+        if(Row == n1 && Col == n2)
         {
-            for(int i = 0; i < num1; i++)
-            {
-                ArrayList<Integer> matrixcal = new ArrayList<>();
-                for(int j = 0; j < num1; j++){
-                    matrixcal.add(matrix.get(i).get(j)+matrix2.get(i).get(j));
+            for(int i = 0; i < summatrix.length; i++){
+                for(int j = 0; j < summatrix[i].length; j++){
+                    summatrix[i][j] = matrix[i][j] + matrix2[i][j];
                 }
-                summatrix.add(matrixcal);
             }
-            System.out.println("Результат додавання: "+summatrix);
+
+            System.out.println("Результат додавання: ");
+
+            for(int[] row: summatrix){
+
+                System.out.println(Arrays.toString(row));}
 
         }
 
     }
 
-    private void scalar(List <ArrayList<Integer>> matrix)
+    private void scalar(int[][] matrix)
     {
-        System.out.println();
+        System.out.println("Введіть число на яке потрібно помножити: ");
         int scal = sc.nextInt();
-        List<ArrayList<Integer>> edmatrix = new ArrayList();
-        for(int i = 0; i < num1; i++){
-            ArrayList<Integer> matrixi = new ArrayList<>();
-            for(int j = 0; j < num2; j++) {
-                matrixi.add(matrix.get(i).get(j)*scal);}
-            edmatrix.add(matrixi);
+        for(int i = 0; i < matrix.length; i++){
+            for(int j = 0; j < matrix[i].length; j++){
+                matrix[i][j] = matrix[i][j]*scal;
+            }
         }
-        System.out.println(edmatrix);
+        for(int[] row: matrix){
+
+            System.out.println(Arrays.toString(row));}
     }
 
 
-    public List <ArrayList<Integer>> stovpchyk()
+    public int[][] stovpchyk()
     {
         System.out.println("Введіть кількість рядків: ");
         int ryadky = sc.nextInt();
-        List<ArrayList<Integer>> stovpchyk = new ArrayList();
-        for (int i = 0; i < ryadky; i++){
-            ArrayList<Integer> matrixi = new ArrayList<>();
-            for (int j = 0; j < 1; j++){
-                int num = (int)(Math.random()*100 );
-                matrixi.add(num);}
-            stovpchyk.add(matrixi);
-        }
-        System.out.println(stovpchyk);
+        int[][] stovpchyk = new int[ryadky][1];
+        for (int i = 0; i < stovpchyk.length; i++){
+            stovpchyk[i][0] = (int)(Math.random()*100 );
+            System.out.println(stovpchyk[i][0]);}
         return stovpchyk;
     }
 
 
 }
+
