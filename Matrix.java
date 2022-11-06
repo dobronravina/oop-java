@@ -10,8 +10,8 @@ public class Matrix {
     int Row;
     int Col;
 
-    int[][] matrix = new int[Row][Col];
 
+    int[][] matrix = new int[Row][Col];
 
 
     public void menu(int[][] matrix)
@@ -22,7 +22,7 @@ public class Matrix {
 
        if(choise == 1)
        {
-           copy_matrix(matrix);
+          int[][] f =  copy_matrix(matrix);
        }
        else if (choise == 2)
        {
@@ -71,7 +71,7 @@ public class Matrix {
         Row = sc.nextInt();
         System.out.println("Введіть кількість стовпців: ");
         Col = sc.nextInt();
-        int[][] matrix = new int[Row][Col];
+         matrix = new int[Row][Col];
 
         for(int i = 0; i < matrix.length; i++){
             for(int j = 0; j < matrix[i].length; j++){
@@ -91,7 +91,7 @@ public class Matrix {
         Row = sc.nextInt();
         System.out.println("Введіть кількість стовпців: ");
         Col = sc.nextInt();
-        int[][] matrix = new int[Row][Col];
+         matrix = new int[Row][Col];
         System.out.println("Заповніть елементами по строках: ");
 
         for(int i = 0; i < matrix.length; i++){
@@ -111,7 +111,7 @@ public class Matrix {
         Row = sc.nextInt();
         System.out.println("Введіть кількість стовпців: ");
         Col = sc.nextInt();
-        int[][] matrix = new int[Row][Col];
+        matrix = new int[Row][Col];
 
         for(int i = 0; i < matrix.length; i++){
             for(int j = 0; j < matrix[i].length; j++){
@@ -139,7 +139,7 @@ public class Matrix {
         int row = sc.nextInt();
         for (int j = 0; j < Col; j++)
         {
-            System.out.print(matrix[row][j]);
+            System.out.print(matrix[row][j]+ " ");
         }
 
     }
@@ -222,7 +222,7 @@ public class Matrix {
         System.out.println("HashCode матриці: "+matrix.hashCode());
     }
 
-    private void copy_matrix(int[][] matrix)
+    private int[][] copy_matrix(int[][] matrix)
     {
         int[][] copied = new int[matrix.length][];
         for (int i = 0; i < matrix.length; i++) {
@@ -233,6 +233,7 @@ public class Matrix {
         for(int[] row: copied){
 
             System.out.println(Arrays.toString(row));}
+        return copied;
     }
 
     private void summatrix(int[][] matrix)
@@ -316,10 +317,12 @@ public class Matrix {
     }
 
 
-    public int[][] stovpchyk()
+
+    public static int[][] stovpchyk()
     {
+        Scanner cs = new Scanner(System.in);
         System.out.println("Введіть кількість рядків: ");
-        int ryadky = sc.nextInt();
+        int ryadky = cs.nextInt();
         int[][] stovpchyk = new int[ryadky][1];
         for (int i = 0; i < stovpchyk.length; i++){
             stovpchyk[i][0] = (int)(Math.random()*100 );
