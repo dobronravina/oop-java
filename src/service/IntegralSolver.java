@@ -22,7 +22,7 @@ public class IntegralSolver {
         {
             while (x > b) {
                 Expression expression = new Expression(function, new Argument("x = " + x));
-                result += D * expression.calculate();
+                result -= D * expression.calculate();
                 x -= D;
             }
         }

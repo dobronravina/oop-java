@@ -1,1 +1,1 @@
-{"Function":"sin(x)","Limits of integration":[2,5],"Interval":0.01,"Result":-0.6998119378897758}
+[{"result":1.416152737176172,"a":1,"b":3,"d":0.01,"function":"sin(x-1)"}]
