@@ -1,8 +1,7 @@
 package service;
 
-import org.json.JSONObject;
-import repository.IntegralRepository;
 import module.Integral;
+import repository.IntegralRepository;
 
 public class IntegralService {
     private final IntegralRepository integralRepository = new IntegralRepository();
@@ -14,11 +13,11 @@ public class IntegralService {
         return new Integral(a, b, D, functionAsString, result);
     }
 
-    public void saveIntegral(double a,double b,double D,String functionAsString,double result ) {
-        integralRepository.saveIntegral( a, b, D,functionAsString, result );
+    public void saveIntegral(Integral integral) {
+        integralRepository.saveIntegral(integral);
     }
 
     public void getIntegralFromFile() {
-      JSONObject f = integralRepository.getIntegralFromFile();
+      Integral f = integralRepository.getLastIntegral();
     }
 }

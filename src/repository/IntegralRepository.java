@@ -1,49 +1,73 @@
 package repository;
 
+import module.Integral;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Scanner;
+import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class IntegralRepository {
 
-    JSONObject jo = new JSONObject();
-    public void saveIntegral(double a,double b,double D,String functionAsString,double result ) {
-         double[] limits = new double[2];
-         limits[0] = a;
-         limits[1] = b;
+    private final String JSONFileName = "Integral.json";
+    public void saveIntegral(Integral integral) {
+        JSONObject newJsonIntegral = new JSONObject(integral);
+        JSONArray savedJsonIntegrals = getSavedJsonIntegrals();
+        savedJsonIntegrals.put(newJsonIntegral);
 
-        Scanner sc = new Scanner(System.in);
-        System.out.println("1. Українська\n2. English");
-        int chois = sc.nextInt();
-        if(chois == 1){
-            jo.put("Функція", functionAsString);
-            jo.put("Межі інтегрування", limits);
-            jo.put("Крок", D);
-            jo.put("Результат",result);
+        writeJsonFile(savedJsonIntegrals);
+    }
 
-        }
-        else {
-            jo.put("Function", functionAsString);
-            jo.put("Limits of integration", limits);
-            jo.put("Interval", D);
-            jo.put("Result",result);
-        }
-
-        try{
-            FileWriter file = new FileWriter("Integral.json");
-            file.write(jo.toString());
-            file.close();
+    private void writeJsonFile(JSONArray jsonIntegrals) {
+        try (FileWriter file = new FileWriter(JSONFileName)) {
+            file.write(jsonIntegrals.toString());
         }
         catch (IOException e) {
             throw new RuntimeException(e);
         }
-
     }
 
-    public JSONObject getIntegralFromFile() {
-        return jo;
+    public Integral getLastIntegral() {
+        List<Integral> allIntegrals = getSavedIntegrals();
+        return allIntegrals.get(allIntegrals.size() - 1);
+    }
+
+    private List<Integral> getSavedIntegrals() {
+        List<Integral> integrals = new ArrayList<>();
+
+        JSONArray jsonIntegrals = getSavedJsonIntegrals();
+        for (Object object : jsonIntegrals) {
+            Integral integral = jsonToIntegral((JSONObject) object);
+            integrals.add(integral);
+        }
+
+        return integrals;
+    }
+
+    private JSONArray getSavedJsonIntegrals() {
+        try {
+            String content = new String(Files.readAllBytes(Paths.get(JSONFileName)));
+            return new JSONArray(content);
+        } catch (NoSuchFileException e) {
+            return new JSONArray();
+        } catch (IOException ioException) {
+            throw new RuntimeException(ioException);
+        }
+    }
+
+    private Integral jsonToIntegral(JSONObject jsonIntegral) {
+        double a = jsonIntegral.getDouble("a");
+        double b = jsonIntegral.getDouble("b");
+        double D = jsonIntegral.getDouble("d");
+        String function = jsonIntegral.getString("function");
+        double result = jsonIntegral.getDouble("result");
+
+        return new Integral(a, b, D, function, result);
     }
 }

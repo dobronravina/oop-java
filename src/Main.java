@@ -1,8 +1,6 @@
 import module.Integral;
-import org.json.JSONObject;
 import repository.IntegralRepository;
 import service.IntegralService;
-import service.IntegralSolver;
 
 import java.util.Scanner;
 
@@ -11,24 +9,33 @@ public class Main {
     private static final Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
-        double a = getDouble("Enter a: ");
-        double b = getDouble("Enter b: ");
-        double D = getDouble("Enter D: ");
+        double a = getDouble("Введіть a: ");
+        double b = getDouble("Введіть b: ");
+        double D = getDouble("Введіть D: ");
 
-        System.out.println("Enter function");
-        String functionAsString = scanner.nextLine();
+        System.out.println("Введіть функцію: ");
+        String function= scanner.nextLine();
 
         IntegralService integralService = new IntegralService();
-        Integral integral = integralService.generateIntegral(a, b, D, functionAsString);
-        //System.out.println(integral);
-
-        IntegralSolver res = new IntegralSolver(a,b,D,functionAsString);
-        double result = res.calculateResult();
+        Integral integral = integralService.generateIntegral(a, b, D, function);
 
         IntegralRepository rep = new IntegralRepository();
-        rep.saveIntegral(a,b,D,functionAsString,result);
-        JSONObject fileRes = rep.getIntegralFromFile();
-        System.out.println(fileRes);
+        rep.saveIntegral(integral);
+
+
+
+        Integral fileRes = rep.getLastIntegral();
+        //System.out.println(fileRes.getResult());
+        System.out.println("1.Українська\n2.English");
+        int choise = scanner.nextInt();
+        if(choise ==1){
+            System.out.println("Функція:" + function + " межі інтегрування: [" + a + ", " + b + "] крок: "+ D +" результат: "+ fileRes.getResult());
+        }
+        else {
+            System.out.println("Function:" + function + " integral limits: [" + a + ", " + b + "] interval: "+ D +" result: "+ fileRes.getResult());
+        }
+
+
     }
 
     private static double getDouble(String massage) {
